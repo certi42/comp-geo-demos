@@ -1,9 +1,11 @@
-class Draggable {
+class DualPoint {
     /**
      * @param {SVGCircleElement} el 
+     * @param {DualElement} parent
      */
-    constructor(el) {
+    constructor(el, parent) {
         this.el = el;
+        this.parent = parent
         this.moving = false;
         this.offsetX = 0;
         this.offsetY = 0;
@@ -22,13 +24,9 @@ class Draggable {
         };
 
         this.el.oncontextmenu = (e) => {
-            this.el.remove();
-            this.line.remove();
-            removeDraggable(this);
+            this.parent.remove();
             e.preventDefault();
         };
-        this.line = dualSvg.append("line")
-        this.updateLine();
     }
 
     /**
@@ -39,7 +37,7 @@ class Draggable {
         if (this.moving === false) {
             return;
         }
-        this.updatePosition(e.clientX - this.offsetX, e.clientY - this.offsetY);
+        this.parent.updatePosition(e.clientX - this.offsetX, e.clientY - this.offsetY);
     }
 
     /**
@@ -67,19 +65,9 @@ class Draggable {
         this.y = y;
         this.el.setAttribute("cx", x.toString());
         this.el.setAttribute("cy", y.toString());
-        this.updateLine();
     }
 
-    updateLine() {
-        const xScale = d3.scaleLinear().domain([0, 500]).range([-5, 5]);
-        const yScale = d3.scaleLinear().domain([0, 500]).range([5, -5]);
-        const a = xScale(this.x);
-        const b = yScale(this.y);
-        this.line
-            .attr("x1", xScale.invert(-5))
-            .attr("x2", xScale.invert(5))
-            .attr("y1", yScale.invert(a * -5 - b))
-            .attr("y2", yScale.invert(a * 5 - b))
-            .attr("stroke", "black")
+    remove() {
+        this.el.remove();
     }
 }

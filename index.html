@@ -6,34 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duality</title>
-    <script src="draggable.js"></script>
+    <script src="dual-plane.js"></script>
+    <script src="dual-element.js"></script>
+    <script src="dual-point.js"></script>
+    <script src="dual-line.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
 </head>
 
 <body>
     <h1>Duality</h1>
-    <svg id="primal-plane" width=500 height=500></svg>
-    <svg id="dual-plane" width=500 height=500></svg>
+    <div id="planes">
+        <svg id="primal-plane" width=500 height=500></svg>
+        <svg id="dual-plane" width=500 height=500></svg>
+    </div>
 </body>
 <script>
-    draggables = [];
-    window.addEventListener('mousemove', (e) => {
-        draggables.forEach(d => d.move(e));
-    })
-    function removeDraggable(obj) {
-        draggables.splice(draggables.indexOf(obj), 1);
-    }
-    const dualSvg = d3.select("#dual-plane");
-    const svg = d3.select("#primal-plane");
-    svg.on('mousedown', (e) => {
-        const circle = svg.append('circle')
-            .attr('cx', e.layerX)
-            .attr("cy", e.layerY)
-            .attr("r", 5);
-        draggables.push(new Draggable(circle.node()));
-        circle.node().onmousedown(e);
-    })
+    const primal = new DualPlane("#primal-plane", "#dual-plane");
+    const dual = new DualPlane("#dual-plane", "#primal-plane");
 </script>
+<style>
+    #planes {
+        user-select: none;
+    }
+
+    svg {
+        border: 1px solid black;
+    }
+
+    line {
+        stroke: black;
+        stroke-width: 2px;
+    }
+
+    line:hover {
+        stroke: gray;
+    }
+</style>
 
 </html>
