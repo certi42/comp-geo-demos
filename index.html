@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duality</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="dual-plane.js"></script>
     <script src="dual-element.js"></script>
     <script src="dual-point.js"></script>
@@ -19,28 +20,11 @@
         <svg id="primal-plane" width=500 height=500></svg>
         <svg id="dual-plane" width=500 height=500></svg>
     </div>
+    <div onclick="resetDraggables();" id="reset-button">reset</div>
 </body>
 <script>
     const primal = new DualPlane("#primal-plane", "#dual-plane");
     const dual = new DualPlane("#dual-plane", "#primal-plane");
 </script>
-<style>
-    #planes {
-        user-select: none;
-    }
-
-    svg {
-        border: 1px solid black;
-    }
-
-    line {
-        stroke: black;
-        stroke-width: 2px;
-    }
-
-    line:hover {
-        stroke: gray;
-    }
-</style>
 
 </html>

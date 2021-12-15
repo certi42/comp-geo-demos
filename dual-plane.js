@@ -6,7 +6,7 @@ class DualPlane {
         this.dual = d3.select(dualId);
 
         this.el.on('mousedown', (e) => {
-            const dual = new DualElement(e.layerX, e.layerY, this.el, this.dual);
+            const dual = new DualElement(e.layerX, e.layerY, this, this.dual);
             dual.point.startMoving(e.clientX, e.clientY);
             draggables.push(dual);
         })
@@ -22,5 +22,11 @@ class DualPlane {
 
     removeDraggable(obj) {
         draggables.splice(draggables.indexOf(obj), 1);
+    }
+}
+
+function resetDraggables() {
+    for (let i = draggables.length - 1; i >= 0; i--) {
+        draggables[i].remove()
     }
 }

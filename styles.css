@@ -1,0 +1,22 @@
+#planes {
+    user-select: none;
+}
+
+#reset-button {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+svg {
+    border: 1px solid black;
+}
+
+line {
+    stroke: black;
+    stroke-width: 2px;
+}
+
+line:hover {
+    stroke: gray;
+}
