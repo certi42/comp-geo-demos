@@ -1,0 +1,19 @@
+#vis {
+    display: flex;
+}
+
+#control-container {
+    display: flex;
+    flex-direction: column;
+}
+
+svg {
+    border: 1px solid black;
+}
+
+#reset-button {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0 10px;
+}

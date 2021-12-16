@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voronoi Diagram</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="point.js"></script>
+    <script src="voronoi.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"
+        integrity="sha512-vPeZ7JCboHcfpqSx5ZD+/jpEhS4JpXxfz9orSvAPPj0EKUVShU2tgy7XkU+oujBJKnWmu4hU7r9MMQNWPfXsYw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1>Voronoi Diagram</h1>
+    <div id="vis">
+        <svg id="svg" width=500 height=500>
+            <g id="vd"></g>
+            <g id="dt"></g>
+            <g>
+                <g id="ec"></g>
+                <g id="vv"></g>
+            </g>
+            <g id="points"></g>
+        </svg>
+        <div id="control-container">
+            <label><input type="checkbox" id="show-voronoi"> Voronoi Diagram</label>
+            <label><input type="checkbox" id="show-delauney"> Delauney Triangulation</label>
+            <label><input type="checkbox" id="show-circles"> Empty Circles</label>
+        </div>
+    </div>
+    <div style="display: flex;">
+        <div onclick="resetDraggables();" id="reset-button">reset</div>
+        <input type="text" id="random-points-amount" placeholder="Add random points...">
+        <button onclick="addRandomPoints();">Add</button>
+    </div>
+</body>
+<script>
+    const svg = d3.select("#points");
+    const vd = d3.select("#vd");
+    const dt = d3.select("#dt");
+    const ec = d3.select("#ec");
+    const vv = d3.select("#vv");
+    const draggables = [];
+
+    window.addEventListener('mousemove', (e) => {
+        draggables.forEach(d => d.move(e));
+    })
+
+    d3.select("svg").on('mousedown', (e) => {
+        addDraggable(e.layerX, e.layerY);
+    });
+
+    function addDraggable(x, y) {
+        const circle = svg
+            .append("circle")
+            .attr('cx', x)
+            .attr('cy', y)
+            .attr('r', 5)
+            .attr('fill', "black")
+        draggables.push(new Draggable(circle.node()));
+        computeVoronoiDiagram();
+    }
+
+    function resetDraggables() {
+        for (let i = draggables.length - 1; i >= 0; i--) {
+            draggables[i].remove()
+        }
+    }
+
+    function removeDraggable(obj) {
+        draggables.splice(draggables.indexOf(obj), 1);
+        computeVoronoiDiagram();
+    }
+
+    function addRandomPoints() {
+        const amount = Number(document.getElementById("random-points-amount").value);
+        for (let i = 0; i < amount; i++) {
+            const x = Math.floor(Math.random() * 500);
+            const y = Math.floor(Math.random() * 500);
+            addDraggable(x, y)
+        }
+    }
+
+</script>
+
+</html>
