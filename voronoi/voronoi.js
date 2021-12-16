@@ -3,7 +3,7 @@ let showVoronoi, showDelauney, showCircles;
 function computeVoronoiDiagram() {
     const points = draggables.map(d => d.position());
     const delauney = d3.Delaunay.from(points);
-    const voronoi = delauney.voronoi();
+    const voronoi = delauney.voronoi([0, 0, 800, 600]);
 
 
     if (showVoronoi) {

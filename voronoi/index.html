@@ -19,7 +19,7 @@
 <body>
     <h1>Voronoi Diagram</h1>
     <div id="vis">
-        <svg id="svg" width=500 height=500>
+        <svg id="svg" width=800 height=600>
             <g id="vd"></g>
             <g id="dt"></g>
             <g>
@@ -81,8 +81,8 @@
     function addRandomPoints() {
         const amount = Number(document.getElementById("random-points-amount").value);
         for (let i = 0; i < amount; i++) {
-            const x = Math.floor(Math.random() * 500);
-            const y = Math.floor(Math.random() * 500);
+            const x = Math.floor(Math.random() * 800);
+            const y = Math.floor(Math.random() * 600);
             addDraggable(x, y)
         }
     }
