@@ -12,11 +12,14 @@ svg {
     border: 1px solid black;
 }
 
+circle:hover {
+    fill: #888;
+}
+
 line {
-    stroke: black;
     stroke-width: 2px;
 }
 
 line:hover {
-    stroke: gray;
+    stroke: #888;
 }

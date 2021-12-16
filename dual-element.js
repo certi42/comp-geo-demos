@@ -1,14 +1,17 @@
 class DualElement {
     constructor(x, y, primalPlane, dualPlane) {
+        this.color = randomColor({ luminosity: 'bright' });
         const circle = primalPlane
             .append("circle")
             .attr('cx', x)
             .attr('cy', y)
             .attr('r', 5)
+            .attr('fill', this.color)
         this.plane = primalPlane;
         this.point = new DualPoint(circle.node(), this);
-        this.line = new DualLine(dualPlane.append("line"), this);
+        this.line = new DualLine(dualPlane.append("line").attr('stroke', this.color), this);
         this.line.updatePosition(this.point.x, this.point.y);
+
     }
 
     remove() {
