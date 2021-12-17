@@ -22,6 +22,7 @@
         <svg id="svg" width=800 height=600>
             <g id="dt"></g>
             <g id="ah"></g>
+            <g id="ab"></g>
             <g id="points"></g>
         </svg>
         <div id="control-container">
@@ -29,6 +30,16 @@
             <label><input type="checkbox" id="show-circles"> Show α Circles</label>
             <label style="display: flex; margin-left: 6px;">α: <input type="range" id="alpha" min="0" max="200"
                     value="100" step="1"></label>
+            <div id="alpha-details">
+                <div>Change the slider to control the α threshold.</div>
+                <div>Hover over an edge to see α<sub>min</sub> and α<sub>max</sub>.</div>
+                <div style="color: maroon;">
+                    <span class="alpha-bound-legend" style="border-color: red;">&emsp;</span>α<sub>min</sub>
+                </div>
+                <div style="color: darkgreen;">
+                    <span class="alpha-bound-legend" style="border-color: green;">&emsp;</span>α<sub>max</sub>
+                </div>
+            </div>
         </div>
     </div>
     <div style="display: flex;">
@@ -40,6 +51,7 @@
 <script>
     const svg = d3.select("#points");
     const ah = d3.select("#ah");
+    const ab = d3.select("#ab");
     const dt = d3.select("#dt");
     const draggables = [];
 

@@ -5,18 +5,26 @@ function computeAlphaHull() {
     const points = draggables.map(d => d.position())
     const delauney = d3.Delaunay.from(points);
 
-    const pointPairs = calculateAlphaLimits(delauney.voronoi([-200, -200, 1800, 1600]))
     ah.html("");
+    const pointPairs = calculateAlphaLimits(delauney.voronoi([-200, -200, 1800, 1600]))
     for (const point of pointPairs) {
         alpha = parseInt(alpha)
         if (alpha > point.min.alpha && alpha < point.max.alpha) {
-            ah.append("line")
+            const line = ah.append("line")
                 .attr('x1', point.pi[0])
                 .attr('x2', point.pj[0])
                 .attr('y1', point.pi[1])
                 .attr('y2', point.pj[1])
                 .attr('stroke', 'black')
                 .attr('stroke-width', '2px')
+                .on('mouseenter', () => {
+                    showAlphaBounds(point)
+                    line.attr('stroke-width', '4px')
+                })
+                .on('mouseleave', () => {
+                    ab.html("")
+                    line.attr('stroke-width', '2px')
+                })
             if (showCircles) {
                 const circle = findEmptyCircle(point.pi, point.pj, alpha)[0]
                 ah.append('circle')
@@ -185,6 +193,23 @@ function intersects(a, b, c, d, p, q, r, s) {
 
 function dist(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
+}
+
+function showAlphaBounds(point) {
+    ab.append('circle')
+        .attr('r', point.max.alpha)
+        .attr('cx', point.max.cx)
+        .attr('cy', point.max.cy)
+        .attr('fill', 'none')
+        .attr('stroke', 'green')
+        .attr('stroke-dasharray', 5)
+    ab.append('circle')
+        .attr('r', point.min.alpha)
+        .attr('cx', point.min.cx)
+        .attr('cy', point.min.cy)
+        .attr('fill', 'none')
+        .attr('stroke', 'red')
+        .attr('stroke-dasharray', 5)
 }
 
 window.addEventListener('load', () => {
