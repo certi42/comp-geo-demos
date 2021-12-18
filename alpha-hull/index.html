@@ -23,7 +23,7 @@
         <svg id="svg" width=800 height=600>
             <g id="dt"></g>
             <g id="ah"></g>
-            <g id="ab"></g>
+            <g id="ab" style="pointer-events: none;"></g>
             <g id="points"></g>
         </svg>
         <div id="control-container">
@@ -31,7 +31,7 @@
             <label><input type="checkbox" id="show-circles"> Show α Circles</label>
             <label style="display: flex; margin-left: 6px;">α: <input type="range" id="alpha" min="0" max="200"
                     value="100" step="1"></label>
-            <div id="alpha-details">
+            <div class="sidebar-text">
                 <div>Change the slider to control the α threshold.</div>
                 <div>Hover over an edge to see α<sub>min</sub> and α<sub>max</sub>.</div>
                 <div style="color: maroon;">
@@ -41,11 +41,34 @@
                     <span class="alpha-bound-legend" style="border-color: green;">&emsp;</span>α<sub>max</sub>
                 </div>
             </div>
-            <div>
+            <div class="sidebar-text">
                 <h2>Demos</h2>
                 <p>Click one of the options below to load a preconfigured set of points</p>
                 <button onclick="loadDemo('us-hull');">Continental United States</button>
                 <button onclick="loadDemo('capital-a');">The Letter A</button>
+            </div>
+            <div id="algorithm" class="sidebar-text">
+                <h2>Algorithm</h2>
+                <ul>
+                    <li>Compute Delaunay Triangulation</li>
+                    <li>For each edge in the triangulation:<ul>
+                            <li>Find α<sub>min</sub>:<ul>
+                                    <li>if the edge passes through its dual Voronoi edge, α<sub>min</sub> is half the
+                                        length
+                                        of the edge</li>
+                                    <li>otherwise, it&#39;s the radius of the smaller of the two circles centered on
+                                        the endpoints of the dual Voronoi edge.</li>
+                                </ul>
+                            </li>
+                            <li>α<sub>max</sub> is the radius of the larger of the two circles centered on the endpoints
+                                of the dual Voronoi edge.<ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>For a given α threshold, each Delaunay edge is part of the alpha hull if α is in
+                        between that edge&#39;s computed α<sub>min</sub> and α<sub>max</sub> values.</li>
+                </ul>
             </div>
         </div>
     </div>

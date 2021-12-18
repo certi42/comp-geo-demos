@@ -23,7 +23,7 @@ svg {
     flex-direction: column;
 }
 
-#alpha-details {
+.sidebar-text {
     margin: 6px;
 }
 
@@ -33,4 +33,13 @@ svg {
     border: 2px dashed black;
     border-radius: 50%;
     margin-right: 6px;
+}
+
+#algorithm {
+    max-width: calc(100vw - 850px);
+    max-height: 300px;
+    overflow: scroll;
+    font-size: small;
+    position: absolute;
+    bottom: 0;
 }
