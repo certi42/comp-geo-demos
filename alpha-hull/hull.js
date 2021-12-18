@@ -1,13 +1,12 @@
 let alpha = 100;
 let showCircles, showDelauney;
-let hullSet = new Set();
 
 function computeAlphaHull() {
     const points = draggables.map(d => d.position())
     const delauney = d3.Delaunay.from(points);
     const voronoi = delauney.voronoi([-200, -200, 1800, 1600]);
     ah.html("");
-    hullSet = new Set();
+    ab.html("");
     const pointPairs = calculateAlphaLimits(voronoi)
     for (const point of pointPairs) {
         alpha = parseInt(alpha)
@@ -27,7 +26,6 @@ function computeAlphaHull() {
                     ab.html("")
                     line.attr('stroke-width', '2px')
                 })
-            hullSet.add([point.pi, point.pj]);
             if (showCircles) {
                 const circle = findEmptyCircle(point.pi, point.pj, alpha)[0]
                 ah.append('circle')

@@ -53,7 +53,8 @@
     })
 
     d3.select("svg").on('mousedown', (e) => {
-        addDraggable(e.layerX, e.layerY);
+        const rect = e.target.getBoundingClientRect();
+        addDraggable(e.clientX - rect.left, e.clientY - rect.top);
     });
 
     function addDraggable(x, y) {

@@ -34,8 +34,9 @@ class DualLine {
 
         const xScale = d3.scaleLinear().domain([0, 500]).range([-5, 5]);
         const yScale = d3.scaleLinear().domain([0, 500]).range([5, -5]);
-        const x = xScale(e.layerX);
-        const y = yScale(e.layerY);
+        const rect = this.parent.dualBounds();
+        const x = xScale(e.clientX - rect.left);
+        const y = yScale(e.clientY - rect.top);
         if (shift) {
             // goal: change a such that line intersects with (x, y)
             // solve y = ax - b => a = (y + b) / x

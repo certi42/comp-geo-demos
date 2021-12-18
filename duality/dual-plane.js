@@ -6,7 +6,8 @@ class DualPlane {
         this.dual = d3.select(dualId);
 
         this.el.on('mousedown', (e) => {
-            const dual = new DualElement(e.layerX, e.layerY, this, this.dual);
+            const rect = e.target.getBoundingClientRect();
+            const dual = new DualElement(e.clientX - rect.left, e.clientY - rect.top, this, this.dual);
             dual.point.startMoving(e.clientX, e.clientY);
             draggables.push(dual);
         })
