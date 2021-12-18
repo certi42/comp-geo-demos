@@ -6,7 +6,8 @@ This is an interactive demo of alpha hulls.
  - Click to add points, drag to move them around, right-click to remove them.
  - Drag the slider to change the alpha threshold.
  - Click the corresponding checkboxes to view the Delaunay triangulation, or the bounding circle for the current alpha level.
- - Hover over an edge to see the minimum and maximum alpha values for that edge.
+ - Hover over an edge to see the minimum and maximum alpha values for that edge, as well as the Voronoi diagram.
+ - Preconfigured point sets which give users baseline from which to explore the algorithm.
 
 ## Algorithm
  - Compute Delaunay Triangulation

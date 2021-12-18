@@ -72,8 +72,8 @@ class Draggable {
         return [this.x, this.y]
     }
 
-    remove() {
+    remove(recompute = true) {
         this.el.remove();
-        removeDraggable(this);
+        removeDraggable(this, recompute);
     }
 }

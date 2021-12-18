@@ -1,12 +1,14 @@
 let alpha = 100;
 let showCircles, showDelauney;
+let hullSet = new Set();
 
 function computeAlphaHull() {
     const points = draggables.map(d => d.position())
     const delauney = d3.Delaunay.from(points);
-
+    const voronoi = delauney.voronoi([-200, -200, 1800, 1600]);
     ah.html("");
-    const pointPairs = calculateAlphaLimits(delauney.voronoi([-200, -200, 1800, 1600]))
+    hullSet = new Set();
+    const pointPairs = calculateAlphaLimits(voronoi)
     for (const point of pointPairs) {
         alpha = parseInt(alpha)
         if (alpha > point.min.alpha && alpha < point.max.alpha) {
@@ -18,13 +20,14 @@ function computeAlphaHull() {
                 .attr('stroke', 'black')
                 .attr('stroke-width', '2px')
                 .on('mouseenter', () => {
-                    showAlphaBounds(point)
+                    showAlphaBounds(point, voronoi)
                     line.attr('stroke-width', '4px')
                 })
                 .on('mouseleave', () => {
                     ab.html("")
                     line.attr('stroke-width', '2px')
                 })
+            hullSet.add([point.pi, point.pj]);
             if (showCircles) {
                 const circle = findEmptyCircle(point.pi, point.pj, alpha)[0]
                 ah.append('circle')
@@ -195,7 +198,7 @@ function dist(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
 }
 
-function showAlphaBounds(point) {
+function showAlphaBounds(point, voronoi) {
     ab.append('circle')
         .attr('r', point.max.alpha)
         .attr('cx', point.max.cx)
@@ -210,6 +213,10 @@ function showAlphaBounds(point) {
         .attr('fill', 'none')
         .attr('stroke', 'red')
         .attr('stroke-dasharray', 5)
+    ab.append('path')
+        .attr('d', voronoi.render())
+        .attr('fill', 'none')
+        .attr('stroke', '#888')
 }
 
 window.addEventListener('load', () => {

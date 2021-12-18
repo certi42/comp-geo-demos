@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="point.js"></script>
     <script src="hull.js"></script>
+    <script src="demo.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"
@@ -40,6 +41,12 @@
                     <span class="alpha-bound-legend" style="border-color: green;">&emsp;</span>α<sub>max</sub>
                 </div>
             </div>
+            <div>
+                <h2>Demos</h2>
+                <p>Click one of the options below to load a preconfigured set of points</p>
+                <button onclick="loadDemo('us-hull');">Continental United States</button>
+                <button onclick="loadDemo('capital-a');">The Letter A</button>
+            </div>
         </div>
     </div>
     <div style="display: flex;">
@@ -69,7 +76,7 @@
         computeAlphaHull();
     })
 
-    function addDraggable(x, y) {
+    function addDraggable(x, y, recompute = true) {
         const circle = svg
             .append("circle")
             .attr('cx', x)
@@ -77,18 +84,23 @@
             .attr('r', 5)
             .attr('fill', "black")
         draggables.push(new Draggable(circle.node()));
-        computeAlphaHull();
+        if (recompute) {
+            computeAlphaHull();
+        }
     }
 
     function resetDraggables() {
         for (let i = draggables.length - 1; i >= 0; i--) {
-            draggables[i].remove()
+            draggables[i].remove(false)
         }
+        computeAlphaHull();
     }
 
-    function removeDraggable(obj) {
+    function removeDraggable(obj, recompute = true) {
         draggables.splice(draggables.indexOf(obj), 1);
-        computeAlphaHull();
+        if (recompute) {
+            computeAlphaHull();
+        }
     }
 
     function addRandomPoints() {
@@ -96,8 +108,9 @@
         for (let i = 0; i < amount; i++) {
             const x = Math.floor(Math.random() * 800);
             const y = Math.floor(Math.random() * 600);
-            addDraggable(x, y)
+            addDraggable(x, y, false)
         }
+        computeAlphaHull();
     }
 
 </script>
