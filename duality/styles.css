@@ -1,5 +1,6 @@
 #planes {
     user-select: none;
+    display: flex;
 }
 
 #reset-button {
